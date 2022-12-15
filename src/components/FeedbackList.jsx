@@ -1,3 +1,4 @@
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import FeedbackItem from "./FeedbackItem";
 import PropTypes from "prop-types";
 
@@ -7,9 +8,22 @@ function FeedbackList({ feedback, handleDelete }) {
   }
   return (
     <div className="feedback-list">
-      {feedback.map((item) => (
-        <FeedbackItem key={item.id} item={item} handleDelete={handleDelete} />
-      ))}
+      <LazyMotion features={domAnimation}>
+        {feedback.map((item) => (
+          <m.div
+            key={item.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <FeedbackItem
+              key={item.id}
+              item={item}
+              handleDelete={handleDelete}
+            />
+          </m.div>
+        ))}
+      </LazyMotion>
     </div>
   );
 }
