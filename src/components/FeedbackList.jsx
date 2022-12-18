@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import FeedbackItem from "./FeedbackItem";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
+import FeedbackContext from "../context/FeedbackContext";
 
-function FeedbackList({ feedback, handleDelete }) {
+function FeedbackList() {
+  const { feedback, dele } = useContext(FeedbackContext);
+
   if (!feedback || feedback.length === 0) {
     return <p>No Feedback Yet</p>;
   }
@@ -16,11 +20,7 @@ function FeedbackList({ feedback, handleDelete }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <FeedbackItem
-              key={item.id}
-              item={item}
-              handleDelete={handleDelete}
-            />
+            <FeedbackItem key={item.id} item={item} />
           </m.div>
         ))}
       </LazyMotion>
@@ -28,13 +28,14 @@ function FeedbackList({ feedback, handleDelete }) {
   );
 }
 
-FeedbackList.propTypes = {
-  feedback: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-    }).isRequired
-  ),
-};
+// Proptypes no longer needed when using context
+// FeedbackList.propTypes = {
+//   feedback: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       text: PropTypes.string.isRequired,
+//       rating: PropTypes.number.isRequired,
+//     }).isRequired
+//   ),
+// };
 export default FeedbackList;
